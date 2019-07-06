@@ -1,2 +1,3 @@
 release: python manage.py migrate --no-input
-web: gunicorn uniklinik.wsgi
+web: gunicorn kardio_mapper.wsgi
+g
