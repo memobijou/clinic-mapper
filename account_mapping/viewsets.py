@@ -5,11 +5,13 @@ from rest_framework.viewsets import GenericViewSet
 from rest_framework import mixins
 from account_mapping.models import AccountMapping
 from account_mapping.serializers import AccountMappingSerializer, MandatorSerializer
+from rest_framework.pagination import PageNumberPagination
 
 
 class AccountMappingViewSet(mixins.RetrieveModelMixin, mixins.ListModelMixin, GenericViewSet):
     serializer_class = AccountMappingSerializer
     queryset = AccountMapping.objects.all()
+    pagination_class = PageNumberPagination
 
     def get_queryset(self):
         if "email" in self.request.GET:
