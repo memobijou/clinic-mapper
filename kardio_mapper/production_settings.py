@@ -9,3 +9,5 @@ DATABASES = {
         default=DATABASE_URL
     )
 }
+
+SECURE_SSL_REDIRECT = True
