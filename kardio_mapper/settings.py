@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'account_mapping',
     'rest_framework',
+    'kardio_mapper',
 ]
 
 MIDDLEWARE = [

@@ -20,7 +20,7 @@ from django.views.generic import TemplateView
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/v1/', include(('account_mapping.urls', "account_mapping"), namespace="account_mapping")),
-    path('', TemplateView.as_view(template_name="index.html"), name="home"),
-    path('impressum', TemplateView.as_view(template_name="impressum.html"), name="impressum"),
-    path('datenschutz', TemplateView.as_view(template_name="datenschutz.html"), name="datenschutz"),
+    path('', TemplateView.as_view(template_name="ukgm_theme/index.html"), name="home"),
+    path('impressum', TemplateView.as_view(template_name="ukgm_theme/impressum.html"), name="impressum"),
+    path('datenschutz', TemplateView.as_view(template_name="ukgm_theme/datenschutz.html"), name="datenschutz"),
 ]
