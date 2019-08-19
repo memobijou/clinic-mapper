@@ -16,7 +16,7 @@ class AccountMappingViewSet(mixins.RetrieveModelMixin, mixins.ListModelMixin, Ge
     def get_queryset(self):
         if "email" in self.request.GET:
             email = self.request.GET.get("email")
-            self.queryset = self.queryset.filter(email=email)
+            self.queryset = self.queryset.filter(email__iexact=email)
         return self.queryset
 
     @action(detail=False, methods=['post'], url_name="submit-account", name="submit-account")
