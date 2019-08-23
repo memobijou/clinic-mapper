@@ -48,3 +48,13 @@ class AccountMappingTestCase(TestCase):
         self.assertEqual(Mandator.objects.count(), 1)
         self.assertEqual(Mandator.objects.first().company_title, "company_title")
         self.assertEqual(Mandator.objects.first().logo_url, "https://blabla")
+
+    def test_only_one_mandator_created_for_multiple_accounts(self):
+        data = {"email": "sam123@bla.de", "url": "jojo.com"}
+        response = self.client.post(reverse_lazy("account_mapping:map-submit-account"), data=data)
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(Mandator.objects.count(), 1)
+        data = {"email": "babo231@bla.de", "url": "jojo.com"}
+        response = self.client.post(reverse_lazy("account_mapping:map-submit-account"), data=data)
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(Mandator.objects.count(), 1)

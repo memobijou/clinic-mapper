@@ -9,22 +9,8 @@ class MandatorSerializer(serializers.ModelSerializer):
         fields = ("id", "company_title", "url", "theme", "logo_url")
 
     @transaction.atomic
-    def save(self, email=None, **kwargs):
+    def save(self, **kwargs):
         self.instance = super().save(**kwargs)
-
-        if email is None:
-            return self.save_mandator(self.instance)
-
-        account = AccountMapping.objects.filter(email__icontains=email).first()
-        if not account:
-            account = AccountMapping.objects.create(email=email)
-
-        self.instance.account = account
-        url = self.instance.url
-        url_occurence = Mandator.objects.filter(url__iexact=url, account__email=email).count()
-        if url_occurence > 0:
-            raise serializers.ValidationError("URL für den Account schon vorhanden")
-        self.instance.save()
         return self.instance
 
     def save_mandator(self, instance):
@@ -38,3 +24,9 @@ class AccountMappingSerializer(serializers.ModelSerializer):
         fields = ("id", "email", "mandators", )
 
     mandators = MandatorSerializer(read_only=True, many=True)
+
+    @transaction.atomic
+    def save(self, mandator, **kwargs):
+        self.instance = super().save(**kwargs)
+        self.instance.mandators.add(mandator)
+        return self.instance

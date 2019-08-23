@@ -9,7 +9,6 @@ class AccountMapping(models.Model):
 class Mandator(models.Model):
     company_title = models.CharField(blank=False, null=True, max_length=200)
     url = models.CharField(blank=False, null=True, max_length=200)
-    account = models.ForeignKey("account_mapping.AccountMapping", null=True, blank=False,
-                                on_delete=models.SET_NULL, related_name="mandators")
+    account = models.ManyToManyField("account_mapping.AccountMapping", null=True, blank=False, related_name="mandators")
     theme = models.CharField(blank=False, null=True, max_length=200)
     logo_url = models.CharField(blank=False, null=True, max_length=200)
