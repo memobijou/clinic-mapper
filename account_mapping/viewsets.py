@@ -34,3 +34,17 @@ class MandatorViewSet(mixins.RetrieveModelMixin, mixins.ListModelMixin, mixins.C
     serializer_class = MandatorSerializer
     queryset = Mandator.objects.all()
     pagination_class = PageNumberPagination
+
+    @action(detail=False, methods=['post'], url_name="submission", name="submission")
+    def submission(self, request):
+        serializer = MandatorSerializer(data=request.data)
+        if serializer.is_valid():
+            url = request.data.get("url")
+            mandator = Mandator.objects.filter(url__iexact=url).first()
+            if mandator:
+                serializer.update(mandator, serializer.validated_data)
+            else:
+                serializer.save()
+            return Response(serializer.data)
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

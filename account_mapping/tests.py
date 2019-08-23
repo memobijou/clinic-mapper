@@ -34,3 +34,17 @@ class AccountMappingTestCase(TestCase):
         response = self.client.post(reverse_lazy("account_mapping:map-submit-account"), data=data)
         self.assertEqual(response.status_code, 200)
         self.assertEqual(Mandator.objects.count(), 2)
+
+    def test_mandator_submission(self):
+        print(reverse_lazy("account_mapping:mandators-submission"))
+        response = self.client.post(reverse_lazy("account_mapping:mandators-submission"),
+                                    data={"url": "blabla.com"})
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(Mandator.objects.count(), 1)
+        response = self.client.post(reverse_lazy("account_mapping:mandators-submission"),
+                                    data={"url": "blabla.com", "company_title": "company_title",
+                                          "logo_url": "https://blabla"})
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(Mandator.objects.count(), 1)
+        self.assertEqual(Mandator.objects.first().company_title, "company_title")
+        self.assertEqual(Mandator.objects.first().logo_url, "https://blabla")

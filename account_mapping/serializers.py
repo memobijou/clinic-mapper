@@ -6,11 +6,15 @@ from django.db import transaction
 class MandatorSerializer(serializers.ModelSerializer):
     class Meta:
         model = Mandator
-        fields = ("id", "title", "url", "theme", "logo_url")
+        fields = ("id", "company_title", "url", "theme", "logo_url")
 
     @transaction.atomic
-    def save(self, email, **kwargs):
+    def save(self, email=None, **kwargs):
         self.instance = super().save(**kwargs)
+
+        if email is None:
+            return self.save_mandator(self.instance)
+
         account = AccountMapping.objects.filter(email__icontains=email).first()
         if not account:
             account = AccountMapping.objects.create(email=email)
@@ -21,6 +25,10 @@ class MandatorSerializer(serializers.ModelSerializer):
         if url_occurence > 0:
             raise serializers.ValidationError("URL für den Account schon vorhanden")
         self.instance.save()
+        return self.instance
+
+    def save_mandator(self, instance):
+        self.instance = instance
         return self.instance
 
 
