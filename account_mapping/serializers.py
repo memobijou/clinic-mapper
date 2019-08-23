@@ -6,7 +6,7 @@ from django.db import transaction
 class MandatorSerializer(serializers.ModelSerializer):
     class Meta:
         model = Mandator
-        fields = ("url", )
+        fields = ("id", "title", "url", "theme", "logo_url")
 
     @transaction.atomic
     def save(self, email, **kwargs):

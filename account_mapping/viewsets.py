@@ -3,7 +3,7 @@ from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework.viewsets import GenericViewSet
 from rest_framework import mixins
-from account_mapping.models import AccountMapping
+from account_mapping.models import AccountMapping, Mandator
 from account_mapping.serializers import AccountMappingSerializer, MandatorSerializer
 from rest_framework.pagination import PageNumberPagination
 
@@ -27,3 +27,10 @@ class AccountMappingViewSet(mixins.RetrieveModelMixin, mixins.ListModelMixin, Ge
             return Response(serializer.data)
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class MandatorViewSet(mixins.RetrieveModelMixin, mixins.ListModelMixin, mixins.CreateModelMixin,
+                      mixins.UpdateModelMixin, GenericViewSet):
+    serializer_class = MandatorSerializer
+    queryset = Mandator.objects.all()
+    pagination_class = PageNumberPagination
