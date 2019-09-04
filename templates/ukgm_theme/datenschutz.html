@@ -27,7 +27,7 @@
  <body>
   <div class="section-2 cc-home-wrap">
    <div class="container-2">
-    <a class="link-block w-inline-block" href="{% static 'ukgm_theme/index.html' %}">
+    <a class="link-block w-inline-block" href="{% url 'home' %}">
      <h1 class="heading-12">
       Startseite
      </h1>
@@ -52,18 +52,18 @@
       </strong>
       AID.connect UG
       <br/>
-      Oliver Schoofs (Geschäftstührer)
+      Holger Nef (Geschäftstührer)
       <br/>
-      Schackumerstr. 39a
+      Gustav-Kayser-Str. 36
       <br/>
-      40667 Meerbusch
+      61231 Bad Nauheim
       <strong>
        <br/>
        ‍
        <br/>
       </strong>
-      <a href="mailto:o.schoofs@gmail.com" target="_blank">
-       Email: o.schoofs@gmail.com
+      <a href="mailto:holger.nef@me.com" target="_blank">
+       Email: holger.nef@me.com
       </a>
       <br/>
       <strong>
@@ -72,7 +72,7 @@
       Link zum Impressum:
       <br/>
       ‍
-      <a href="https://www.heizmodule.de/impressum">
+      <a href="{% url 'impressum' %}">
        Impressum
       </a>
       <br/>
